@@ -1,5 +1,6 @@
 defmodule ForumWeb.Router do
   use ForumWeb, :router
+  # alias ForumWeb.PostController
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,6 +19,12 @@ defmodule ForumWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+  end
+
+  scope "/api", ForumWeb do
+    pipe_through :api
+    resources "/posts", PostController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.
